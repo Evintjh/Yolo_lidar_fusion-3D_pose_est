@@ -7,6 +7,7 @@
 
 ## 1. Overview
 Original readme can be found on the [GitHub page](https://github.com/TimKie/YOLO-LiDAR-Fusion)
+- This repo combines yoloE-seg model with livox lidar pcls
 
 ## 2. Usage
 1. After connecting to X3002715, start the virtual environment
