@@ -1,36 +1,35 @@
 import numpy as np
-
+import yaml
 
 class LiDAR2Camera(object):
     """ Calibration object that contains calibration (transformation & rotation) matrices """
     """ NOTE: For calibration diretory that contains the only 1 file 'xxxxxx.txt' """
 
     def __init__(self, calib_file):
-        # calibs = self.read_calib_file(calib_file)
+        with open(calib_file, "r") as f:
+            data = yaml.safe_load(f)
+
+        self.P = np.array(data["P"], dtype=np.float64)
+        self.V2C = np.array(data["V2C"], dtype=np.float64)
+        self.R0 = np.array(data["R0"], dtype=np.float64)
+
         
         # Projection from 3D world coordinates to 2D image coordinates for camera 2
-        # self.P = calibs["P2"].reshape(3, 4)
         # 1920 x 1080 resolution
         # self.P = np.array([(2.6/0.003), 0, 960, -0.2633407279600722,  0, (2.6/0.003), 540, 0.0,  0, 0, 1, 0.05643600418216932]).reshape(3, 4)
         #self.P = np.array([(2.6/0.003), 0, 960, -0.2633407279600722,  0, (2.6/0.003), 540, 1.0,  0, 0, 1, 0.05643600418216932]).reshape(3, 4)
         self.P = np.array([(2.6/0.003), 0, 960, 242.73333333,  0, (2.6/0.003), 540, 5.4,  0, 0, 1, 0.010]).reshape(3, 4)
         # self.P = np.array([(2.6/0.003), 0, 960, 0,  0, (2.6/0.003), 540, 0,  0, 0, 1, 0]).reshape(3, 4)
+        
         # Rigid transform from Lidar coord to reference camera coord
-        # self.V2C = calibs["Tr_velo_to_cam"].reshape(3, 4)
         #self.V2C = np.array([1,0,0,0,  0,1,0,0,  0,0,1,0]).reshape(3, 4)
-        #self.V2C = np.array([0,1,0,-0.5,  0,0,-1,0.5,  -1,0,0,0]).reshape(3, 4)  #### close
         #self.V2C = np.array([0,1,0,0,  0,0,-1,0,  -1,0,0,0]).reshape(3, 4)
         self.V2C = np.array([0,1,0,0.9,  0,0,-1,0,  1,0,0,0.15]).reshape(3, 4)
+
         # Rotation from reference camera coord to rect camera coord
-        # self.R0 = calibs["R0_rect"].reshape(3, 3)
-        #self.R0 = np.array([0.98480776, 0, -0.17364809,  0, 0.99999999, 0,    0.17364809, 0, 0.98480776]).reshape(3, 3)
-        #self.R0 = np.array([0.98480776, 0, -0.0,  0, 0.99999999, 0,    0, 0, 0.98480776]).reshape(3, 3)
-        #self.R0 = np.array([1, 0, 0,  0, -1, 0,    0, 0, -1]).reshape(3, 3)
-        #self.R0 = np.array([0.984862, 0, -0.173304,  0, -1, 0,    -0.173304, 0, -0.984862]).reshape(3, 3)
-        
         # rotate about z by 1 deg, 10 deg about y, 180 deg about x
         self.R0 = np.array([0.984862, 0.017452, -0.173622,  0.017187, -0.999848, -0.003030, -0.173648, 0, -0.984807]).reshape(3, 3)
-        #self.R0 = np.array([1, 0, 0,  0, -1, 0,    0, 0, -1]).reshape(3, 3)
+
     def read_calib_file(self, filepath):
         """ Read in a calibration file and parse into a dictionary.
         Ref: https://github.com/utiasSTARS/pykitti/blob/master/pykitti/utils.py

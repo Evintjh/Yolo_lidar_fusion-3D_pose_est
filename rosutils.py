@@ -10,13 +10,10 @@ class ROSUtils:
     def __init__(self):
         rospy.init_node('listener', anonymous=True)
         self.arraydata = np.array([])
-        #self.listener()
         self.imagedata = None
         rospy.Subscriber("/lidar_points", PointCloud2, self.ros_callback, queue_size=1)
         rospy.Subscriber("/camera/image/compressed", CompressedImage, self.ros_imagecallback, queue_size=1)
-        print('spin')
-        # rospy.spin()
-        print('after spin')
+        rospy.spin()
 
     def ros_callback(self, data):
         point_generator = pc2.read_points(data, field_names = ("x", "y", "z", "intensity"), skip_nans=True)
@@ -30,11 +27,6 @@ class ROSUtils:
             self.imagedata = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         except Exception as e:
             print(e)
-
-    # def listener(self):
-    #     rospy.init_node('listener', anonymous=True)
-    #     rospy.Subscriber("/lidar_points", PointCloud2, self.ros_callback)
-    #     rospy.Subscriber("/camera/image/compressed", CompressedImage, self.ros_imagecallback)
 
     def getLidarPoints(self):
         return self.arraydata
