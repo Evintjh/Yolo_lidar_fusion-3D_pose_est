@@ -7,16 +7,11 @@
 
 ## 1. Overview
 Original readme can be found on the [GitHub page](https://github.com/TimKie/YOLO-LiDAR-Fusion)
-- This repo combines yoloE-seg model with livox lidar pcls
+- This repo combines yoloE-seg model with *livox lidar* pcls. It is suitable for other lidars as well, but would require tuning and experimentation.
 - To use this, you have to calibrate the projection matrices (intrinsic & extrinsic) to be your robot's configuration. You may edit them in `config/cam_config.yaml`.
 
 ## 2. Usage
-1. After connecting to X3002715, start the virtual environment
-
-   ```shell
-   cd yololidarmiscdev
-   source env38/bin/activate
-   ```
+1. After connecting to Robot, clone the repo and create a virtual environment for it. Install all dependencies. Refer to (https://github.com/TimKie/YOLO-LiDAR-Fusion).
 
 2. Run the detector.py code
 
@@ -29,7 +24,7 @@ Original readme can be found on the [GitHub page](https://github.com/TimKie/YOLO
 
 Messages are published to /fused_image (frame data) and /depths (lidar point depth).
 
-4. Parameters can be modified directly in the code 
+4. Parameters can be modified directly in `config/processing_config.yaml` 
    
    - **--erosion**: specifies the amount of erosion used by the model (smaller value --> higher erosion) (default: 25)
    
@@ -39,9 +34,6 @@ Messages are published to /fused_image (frame data) and /depths (lidar point dep
 
    Update the depth argument value in the process_frame2() function call in detectionthread function of detector.py
   
-   - **--pca**: specifies whether PCA should be used to create the 3D bounding boxes for all detected objects (default: False)
-
-   Update the PCA argument value in the YOLOv8Detector initialisation in \_\_main\_\_ function of detector.py
 
 5. Other features can be enabled/disabled/modified in the code
 
@@ -55,4 +47,4 @@ Messages are published to /fused_image (frame data) and /depths (lidar point dep
 
    - Model: change the model in \_\_main\_\_ function of detector.py
 
-All the best
+
