@@ -8,7 +8,7 @@
 ## 1. Overview
 Original readme can be found on the [GitHub page](https://github.com/TimKie/YOLO-LiDAR-Fusion)
 - This repo combines yoloE-seg model with livox lidar pcls
-- To use this, you have to calibrate the projection matrices (intrinsic & extrinsic) to be your robot's configuration
+- To use this, you have to calibrate the projection matrices (intrinsic & extrinsic) to be your robot's configuration. You may edit them in `config/cam_config.yaml`.
 
 ## 2. Usage
 1. After connecting to X3002715, start the virtual environment
