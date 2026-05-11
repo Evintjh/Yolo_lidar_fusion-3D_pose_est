@@ -17,18 +17,18 @@ class LiDAR2Camera(object):
         # Projection from 3D world coordinates to 2D image coordinates for camera 2
         # 1920 x 1080 resolution
         # self.P = np.array([(2.6/0.003), 0, 960, -0.2633407279600722,  0, (2.6/0.003), 540, 0.0,  0, 0, 1, 0.05643600418216932]).reshape(3, 4)
-        #self.P = np.array([(2.6/0.003), 0, 960, -0.2633407279600722,  0, (2.6/0.003), 540, 1.0,  0, 0, 1, 0.05643600418216932]).reshape(3, 4)
-        self.P = np.array([(2.6/0.003), 0, 960, 242.73333333,  0, (2.6/0.003), 540, 5.4,  0, 0, 1, 0.010]).reshape(3, 4)
+        # self.P = np.array([(2.6/0.003), 0, 960, -0.2633407279600722,  0, (2.6/0.003), 540, 1.0,  0, 0, 1, 0.05643600418216932]).reshape(3, 4)
+        #self.P = np.array([(2.6/0.003), 0, 960, 242.73333333,  0, (2.6/0.003), 540, 5.4,  0, 0, 1, 0.010]).reshape(3, 4)
         # self.P = np.array([(2.6/0.003), 0, 960, 0,  0, (2.6/0.003), 540, 0,  0, 0, 1, 0]).reshape(3, 4)
         
         # Rigid transform from Lidar coord to reference camera coord
-        #self.V2C = np.array([1,0,0,0,  0,1,0,0,  0,0,1,0]).reshape(3, 4)
-        #self.V2C = np.array([0,1,0,0,  0,0,-1,0,  -1,0,0,0]).reshape(3, 4)
-        self.V2C = np.array([0,1,0,0.9,  0,0,-1,0,  1,0,0,0.15]).reshape(3, 4)
+        # self.V2C = np.array([1,0,0,0,  0,1,0,0,  0,0,1,0]).reshape(3, 4)
+        # self.V2C = np.array([0,1,0,0,  0,0,-1,0,  -1,0,0,0]).reshape(3, 4)
+        #self.V2C = np.array([0,1,0,0.9,  0,0,-1,0,  1,0,0,0.15]).reshape(3, 4)
 
         # Rotation from reference camera coord to rect camera coord
         # rotate about z by 1 deg, 10 deg about y, 180 deg about x
-        self.R0 = np.array([0.984862, 0.017452, -0.173622,  0.017187, -0.999848, -0.003030, -0.173648, 0, -0.984807]).reshape(3, 3)
+        #self.R0 = np.array([0.984862, 0.017452, -0.173622,  0.017187, -0.999848, -0.003030, -0.173648, 0, -0.984807]).reshape(3, 3)
 
     def read_calib_file(self, filepath):
         """ Read in a calibration file and parse into a dictionary.
